@@ -4,20 +4,24 @@
 
 // Pages are Server Components by default but can be set to a Client Component.
 
-// Pages can fetch data. 
+// Pages can fetch data.
 
-import { Metadata } from 'next'
-import Link from 'next/link'
+'use client'
+
+// import { Metadata } from 'next'
+// import Link from 'next/link'
+import { Links } from './components/links'
+import { useRouter } from 'next/navigation'
  
-export const metadata: Metadata = {
-  title: 'Next.js',
-}
+// export const metadata: Metadata = {
+//   title: 'Next.js',
+// }
  
 export default function Page() {
   return (
     <div>
-      <h1>Hello, Next.js!</h1>
-      <Link href="/dashboard">Dashboard</Link>
+      <h1>Home</h1>
+      <Links />
     </div>
   )
 }
