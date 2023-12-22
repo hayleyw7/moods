@@ -10,12 +10,16 @@ export default function Page() {
     <div>
       <Suspense fallback={<Loading />}>
         <h1>Dashboard</h1>
-        <li>
-          <Link href="/">Home</Link>
-        </li>
-        <li>
-          <Link href="/dashboard#settings">Settings</Link>
-        </li>
+        <Suspense fallback={<p>Loading Home link...</p>}>
+          <li>
+            <Link href="/">Home</Link>
+          </li>
+        </Suspense>
+        <Suspense fallback={<p>Loading Settings link...</p>}>
+          <li>
+            <Link href="/dashboard#settings">Settings</Link>
+          </li>
+        </Suspense>
       </Suspense>
     </div>
   )
