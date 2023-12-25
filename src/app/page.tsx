@@ -1,6 +1,4 @@
-'use client'
-
-import { Links } from './components/links'
+import { Links } from './components/links';
 import React, { useState, useEffect, Suspense } from 'react';
 import Image from 'next/image';
 
@@ -11,21 +9,22 @@ type RandomImage = {
 async function getRandomImages(count: number): Promise<RandomImage[]> {
   const urls = Array.from({ length: count }, () => 'https://picsum.photos/200');
   const responses = await Promise.all(urls.map(url => fetch(url)));
-  const images = await Promise.all(responses.map(async (response) => {
+  
+  const images = responses.map(async (response) => {
     if (!response.ok) {
       throw new Error(`Failed to fetch image`);
     }
-    const blob = await response.blob();
-    return URL.createObjectURL(blob);
-  }));
-  return images.map(url => ({ url }));
+    return { url: URL.createObjectURL(await response.blob()) };
+  });
+
+  return Promise.all(images);
 }
 
 export default function Page() {
   const [randomImages, setRandomImages] = useState<RandomImage[]>([]);
 
   useEffect(() => {
-    getRandomImages(3) // Fetch 3 random images
+    getRandomImages(3)
       .then(images => {
         setRandomImages(images);
       })
