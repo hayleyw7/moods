@@ -1,12 +1,8 @@
 'use client'
 
-// import { Metadata } from 'next'
-// import Link from 'next/link'
-// import Loading from './loading'
-// import { useRouter } from 'next/navigation'
- 
 import { Links } from './components/links'
 import React, { useState, useEffect, Suspense } from 'react';
+import Image from 'next/image';
 
 type KittenImage = {
   url: string;
@@ -51,7 +47,11 @@ export default function Page() {
       <div>
         {kittenImages.map((image, index) => (
           <Suspense fallback={<p>Loading Kitten...</p>} key={index}>
-            <img src={image.url} alt={`Kitten ${index}`} />
+            <Image
+              src={image.url}
+              alt={`Kitten ${index}`}
+              key={index}
+            />
           </Suspense>
         ))}
       </div>
