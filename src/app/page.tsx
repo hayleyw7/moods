@@ -1,3 +1,5 @@
+'use client'
+
 import { Links } from './components/links';
 import React, { useState, useEffect, Suspense } from 'react';
 import Image from 'next/image';
@@ -36,7 +38,7 @@ export default function Page() {
   return (
     <div>
       <Links />
-      <h1>Home</h1>
+      <h1 className="text-3xl font-bold underline">Home</h1>
       <div>
         {randomImages.length > 0 ? (
           <Suspense fallback={<p>Loading Images...</p>}>
