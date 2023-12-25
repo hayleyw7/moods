@@ -32,7 +32,7 @@ async function getRandomKittenImages(): Promise<KittenImage[]> {
 }
 
 export default function Page() {
-  const [kittenImages, setKittenImages] = useState([]);
+  const [kittenImages, setKittenImages] = useState<KittenImage[]>([]);
 
   useEffect(() => {
     getRandomKittenImages()
