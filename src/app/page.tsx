@@ -4,39 +4,33 @@ import { Links } from './components/links'
 import React, { useState, useEffect, Suspense } from 'react';
 import Image from 'next/image';
 
-type KittenImage = {
+type RandomImage = {
   url: string;
 };
 
-async function getRandomKittenImages(): Promise<KittenImage[]> {
-  const randomNumbers = Array.from({ length: 3 }, () => 
-    Math.floor(Math.random() * 999) + 1
-  );
-
-  const fetchKittenImage = async (number: number): Promise<KittenImage> => {
-    const url = `https://placekitten.com/g/200/${number}`;
-    const response = await fetch(url);
-
+async function getRandomImages(count: number): Promise<RandomImage[]> {
+  const urls = Array.from({ length: count }, () => 'https://picsum.photos/200');
+  const responses = await Promise.all(urls.map(url => fetch(url)));
+  const images = await Promise.all(responses.map(async (response) => {
     if (!response.ok) {
-      throw new Error(`Failed to fetch image at ${url}`);
+      throw new Error(`Failed to fetch image`);
     }
-
-    return { url };
-  };
-
-  return Promise.all(randomNumbers.map(fetchKittenImage));
+    const blob = await response.blob();
+    return URL.createObjectURL(blob);
+  }));
+  return images.map(url => ({ url }));
 }
 
 export default function Page() {
-  const [kittenImages, setKittenImages] = useState<KittenImage[]>([]);
+  const [randomImages, setRandomImages] = useState<RandomImage[]>([]);
 
   useEffect(() => {
-    getRandomKittenImages()
+    getRandomImages(3) // Fetch 3 random images
       .then(images => {
-        setKittenImages(images);
+        setRandomImages(images);
       })
       .catch(error => {
-        console.error('Error fetching kitten images:', error);
+        console.error('Error fetching random images:', error);
       });
   }, []);
 
@@ -45,15 +39,20 @@ export default function Page() {
       <Links />
       <h1>Home</h1>
       <div>
-        {kittenImages.map((image, index) => (
-          <Suspense fallback={<p>Loading Kitten...</p>} key={index}>
-            <Image
-              src={image.url}
-              alt={`Kitten ${index}`}
-              key={index}
-            />
+        {randomImages.length > 0 ? (
+          <Suspense fallback={<p>Loading Images...</p>}>
+            {randomImages.map((image, index) => (
+              <div key={index}>
+                <Image
+                  src={image.url}
+                  alt={`Random Image ${index + 1}`}
+                />
+              </div>
+            ))}
           </Suspense>
-        ))}
+        ) : (
+          <p>Loading Images...</p>
+        )}
       </div>
     </div>
   );
