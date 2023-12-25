@@ -6,7 +6,7 @@
 
 // A layout.js and page.js file can be defined in the same folder. The layout will wrap the page.
 
-export default function DashboardLayout({
+export default function AboutLayout({
   children,
 }: {
   children: React.ReactNode

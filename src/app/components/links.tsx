@@ -7,24 +7,21 @@ export function Links() {
   const pathname = usePathname();
 
   return (
-    <nav>
-      <ul>
-        {pathname !== '/' && (
-          <li>
-            <Link href="/">Home</Link>
-          </li>
-        )}
-        {pathname !== '/dashboard' && (
-          <li>
-            <Link href="/dashboard">Dashboard</Link>
-          </li>
-        )}
-        {pathname !== '/settings' && (
-          <li>
-            <Link href="/settings">Settings</Link>
-          </li>
-        )}
-      </ul>
-    </nav>
+    <div className="bg-blue-500 py-4">
+      <div className="container mx-auto">
+        <ul className="flex justify-center space-x-4">
+          {pathname !== '/' && (
+            <li>
+              <Link href="/">Home</Link>
+            </li>
+          )}
+          {pathname !== '/about' && (
+            <li>
+              <Link href="/about">About</Link>
+            </li>
+          )}
+        </ul>
+      </div>
+    </div>
   );
-}
+};

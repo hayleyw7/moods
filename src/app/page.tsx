@@ -39,20 +39,21 @@ export default function Page() {
     <div>
       <Links />
       <h1 className="text-3xl font-bold underline">Home</h1>
-      <div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
         {randomImages.length > 0 ? (
-          <Suspense fallback={<p>Loading Images...</p>}>
+          <Suspense fallback={<p className="text-center">Loading Images...</p>}>
             {randomImages.map((image, index) => (
-              <div key={index}>
+              <div key={index} className="p-4">
                 <Image
                   src={image.url}
                   alt={`Random Image ${index + 1}`}
+                  className="rounded-lg shadow-lg"
                 />
               </div>
             ))}
           </Suspense>
         ) : (
-          <p>Loading Images...</p>
+          <p className="text-center">Loading Images...</p>
         )}
       </div>
     </div>
