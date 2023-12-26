@@ -1,3 +1,3 @@
-# Hello Next.js
+# Moods
 
-This is based on a [tutorial](https://nextjs.org/docs/getting-started/installation) for [Next.js](https://nextjs.org/).
+This is a demo app created with Next.js, TypeScript, & Tailwind.
